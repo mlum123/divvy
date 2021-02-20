@@ -57,8 +57,8 @@ const GoogleCal = {
         showSignOutButton: true,
       });
       */
-
-      GoogleCal.listEvents();
+      GoogleCal.getEvents();
+      // GoogleCal.listEvents();
       // GoogleCal.insertNewEvent();
     } else {
       /*
@@ -70,27 +70,84 @@ const GoogleCal = {
     }
   },
 
-  // Lists the next 10 events on the user's primary calendar.
-  listEvents() {
-    gapi.client.calendar.events
+  // takes in a date and returns the date for the Monday of that week (start of that week)
+  getMonday(d) {
+    d = new Date(d);
+    let day = d.getDay(),
+      diff = d.getDate() - day + (day === 0 ? -6 : 1);
+    return new Date(d.setDate(diff));
+  },
+
+  // takes in a date and returns the date for the Sunday of that week (end of that week)
+  getSunday(d) {
+    d = new Date(d);
+    let day = d.getDay(),
+      diff = d.getDate() + (7 - day);
+    return new Date(d.setDate(diff));
+  },
+
+  // converts dates to mm/dd/yyyy format
+  convertDate(date) {
+    let dd = String(date.getDate()).padStart(2, "0");
+    let mm = String(date.getMonth() + 1).padStart(2, "0"); //January is 0!
+    let yyyy = date.getFullYear();
+    let converted = mm + "/" + dd + "/" + yyyy;
+    return converted;
+  },
+
+  // converts Google Cal date-times (in yyyy-mm-ddTtime) to mm/dd/yyyy format
+  convertGoogleDateTime(date) {
+    let yyyy = date.substring(0, 4);
+    let mm = date.substring(5, 7);
+    let dd = date.substring(8, 10);
+    let converted = mm + "/" + dd + "/" + yyyy;
+    return converted;
+  },
+
+  // Get this week's events on user's household calendar
+  getEvents() {
+    // TODO - check if user has a household calendar
+    // if yes, use that
+    // if not, create new household calendar user can use to schedule chores
+    // https://www.googleapis.com/calendar/v3/users/me/calendarList
+    // today's date
+    let today = new Date();
+
+    // calculate monday's date using today's date and today's day of the week
+    let monDate = GoogleCal.getMonday(today);
+    monDate = GoogleCal.convertDate(monDate);
+
+    // calculate sunday's date using today's date and today's day of the week
+    let sunDate = GoogleCal.getSunday(today);
+    sunDate = GoogleCal.convertDate(sunDate);
+
+    // use timeMin to specify only getting events that happened / are happening on Monday forward
+    return gapi.client.calendar.events
       .list({
         calendarId: "primary",
-        timeMin: new Date().toISOString(),
+        timeMin: new Date(monDate).toISOString(),
         showDeleted: false,
-        maxResults: 10,
         singleEvents: true,
         orderBy: "startTime",
       })
       .then((res) => {
+        // let's say week starts on monday, ends on sunday
+        // use filter to get all Google Calendar events for the week
         const events = res.result.items;
+
         if (events.length > 0) {
-          console.log("Upcoming events:");
-          events.map((event, i) => {
-            const start = event.start.dateTime || event.start.date;
-            console.log(`${start} - ${event.summary}`);
+          return events.filter((event, i) => {
+            let eventTime = event.start.dateTime;
+            eventTime = this.convertGoogleDateTime(eventTime);
+            let startWeek = Date.parse(monDate);
+            let endWeek = Date.parse(sunDate);
+            let dateToCheck = Date.parse(eventTime);
+
+            return dateToCheck <= endWeek && dateToCheck >= startWeek;
           });
         } else {
           console.log("No upcoming events found.");
+          return [];
         }
       });
   },

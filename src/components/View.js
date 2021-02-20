@@ -8,7 +8,14 @@ class View extends React.Component {
     return (
       <div>
         {this.props.view === "home" ? <Home /> : ""}
-        {this.props.view === "calendar" ? <Calendar /> : ""}
+        {this.props.view === "calendar" ? (
+          <Calendar
+            getEvents={this.props.getEvents}
+            events={this.props.events}
+          />
+        ) : (
+          ""
+        )}
         {this.props.view === "piechart" ? <PieChart /> : ""}
       </div>
     );

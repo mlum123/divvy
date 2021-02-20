@@ -11,8 +11,8 @@ import {
   Nav,
   NavItem,
   NavLink,
-  NavbarText,
 } from "reactstrap";
+import GoogleCal from "./GoogleCal";
 
 class App extends React.Component {
   constructor(props) {
@@ -21,10 +21,12 @@ class App extends React.Component {
     this.state = {
       view: "home", // default View is home
       isNavbarOpen: false,
+      events: [],
     };
 
     this.toggleNavbar = this.toggleNavbar.bind(this);
     this.onNavLinkClick = this.onNavLinkClick.bind(this);
+    this.getEvents = this.getEvents.bind(this);
   }
 
   toggleNavbar() {
@@ -43,6 +45,13 @@ class App extends React.Component {
     }
 
     this.setState({ view: newViewState });
+  }
+
+  // get events using GoogleCal module's getEvents method
+  getEvents() {
+    GoogleCal.getEvents().then((events) => {
+      this.setState({ events: events });
+    });
   }
 
   render() {
@@ -68,7 +77,11 @@ class App extends React.Component {
             </Collapse>
           </Navbar>
         </header>
-        <View view={this.state.view} />
+        <View
+          view={this.state.view}
+          getEvents={this.getEvents}
+          events={this.state.events}
+        />
       </div>
     );
   }
