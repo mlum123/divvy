@@ -59,7 +59,7 @@ const GoogleCal = {
       */
 
       GoogleCal.listEvents();
-      // insertNewEvent();
+      // GoogleCal.insertNewEvent();
     } else {
       /*
       this.setState({
