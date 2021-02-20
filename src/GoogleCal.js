@@ -1,5 +1,4 @@
-import React from "react";
-
+// GoogleCal module for OAuth2 to view and edit user's Google Calendar events
 const API_KEY = "AIzaSyAOI8-JscEE9-I5ASQl2IW5rgjzGZAzXm8";
 const CLIENT_ID =
   "741533676224-8io2t0a1pmm4dhrs68k38bkvp153nuie.apps.googleusercontent.com";
@@ -10,45 +9,23 @@ const SCOPES = "https://www.googleapis.com/auth/calendar.events";
 
 let gapi = window.gapi;
 
-class GoogleCal extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      showAuthButton: true,
-      showSignOutButton: true,
-    };
-
-    this.handleAuthClick = this.handleAuthClick.bind(this);
-    this.handleSignoutClick = this.handleSignoutClick.bind(this);
-    this.handleClientLoad = this.handleClientLoad.bind(this);
-    this.initClient = this.initClient.bind(this);
-    this.updateSigninStatus = this.updateSigninStatus.bind(this);
-    this.listEvents = this.listEvents.bind(this);
-  }
-
-  /**
-   *  Sign in the user upon button click.
-   */
+const GoogleCal = {
+  // Sign in the user upon button click.
   handleAuthClick() {
     gapi.auth2.getAuthInstance().signIn();
-  }
+  },
 
-  /**
-   *  Sign out the user upon button click.
-   */
+  // Sign out the user upon button click.
   handleSignoutClick() {
     gapi.auth2.getAuthInstance().signOut();
-  }
+  },
 
-  /**
-   *  On load, called to load the auth2 library and API client library.
-   */
+  // On load, called to load the auth2 library and API client library.
   handleClientLoad() {
     gapi.load("client:auth2", this.initClient);
-  }
+  },
 
-  initClient = () => {
+  initClient() {
     gapi.client
       .init({
         apiKey: API_KEY,
@@ -59,38 +36,41 @@ class GoogleCal extends React.Component {
       .then(function () {
         // Listen for sign-in state changes.
 
-        // to access instance method you have to use `this.updateSigninStatus`
-        gapi.auth2.getAuthInstance().isSignedIn.listen(this.updateSigninStatus);
+        gapi.auth2
+          .getAuthInstance()
+          .isSignedIn.listen(GoogleCal.updateSigninStatus);
 
         // Handle the initial sign-in state.
-        this.updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
+        GoogleCal.updateSigninStatus(
+          gapi.auth2.getAuthInstance().isSignedIn.get()
+        );
       });
-  };
+  },
 
-  /**
-   *  Called when the signed in status changes, to update the UI
-   *  appropriately. After a sign-in, the API is called.
-   */
+  // Called when the signed in status changes, to update the UI appropriately.
+  // After a sign-in, the API is called.
   updateSigninStatus(isSignedIn) {
     if (isSignedIn) {
+      /*
       this.setState({
         showAuthButton: false,
         showSignOutButton: true,
       });
+      */
 
-      this.listEvents();
-      // this.insertNewEvent();
+      GoogleCal.listEvents();
+      // insertNewEvent();
     } else {
+      /*
       this.setState({
         showAuthButton: true,
         showSignOutButton: false,
       });
+      */
     }
-  }
+  },
 
-  /**
-   * Lists the next 10 events on the user's primary calendar.
-   */
+  // Lists the next 10 events on the user's primary calendar.
   listEvents() {
     gapi.client.calendar.events
       .list({
@@ -113,30 +93,7 @@ class GoogleCal extends React.Component {
           console.log("No upcoming events found.");
         }
       });
-  }
-
-  componentDidMount() {
-    this.handleClientLoad();
-  }
-
-  render() {
-    let authButton = (
-      <button id="authorize-button" onClick={this.handleAuthClick}>
-        Authorize
-      </button>
-    );
-    let signOutButton = (
-      <button id="signout-button" onClick={this.handleSignoutClick}>
-        Sign Out
-      </button>
-    );
-    return (
-      <div className="container">
-        {this.state.showAuthButton ? authButton : null}
-        {this.state.showSignOutButton ? signOutButton : null}
-      </div>
-    );
-  }
-}
+  },
+};
 
 export default GoogleCal;

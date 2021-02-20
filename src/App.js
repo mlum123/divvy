@@ -1,14 +1,14 @@
 import logo from "./logo.svg";
 import "./App.css";
 import "./GoogleCal";
-import GoogleCal from "./GoogleCal";
+import CalendarButtons from "./components/CalendarButtons";
 
 function App() {
   return (
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
-        <GoogleCal />
+        <CalendarButtons />
       </header>
     </div>
   );
