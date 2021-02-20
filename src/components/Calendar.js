@@ -1,6 +1,8 @@
+// Calendar component of Google Calendar events
 import React from "react";
 import { Table } from "reactstrap";
 import "./Calendar.css";
+import Event from "./Event";
 
 class Calendar extends React.Component {
   constructor(props) {
@@ -60,6 +62,7 @@ class Calendar extends React.Component {
         startTime,
         endTime,
         event.summary,
+        event.description,
       ];
     });
 
@@ -127,17 +130,20 @@ class Calendar extends React.Component {
             </tr>
           </thead>
           <tbody>
-            {times.map((time) => {
+            {times.map((time, i) => {
               return (
-                <tr>
+                <tr key={i}>
                   <th scope="row">{time}</th>
-                  {days.map((day) => {
+                  {days.map((day, j) => {
                     return eventsMap.hasOwnProperty(
                       `${time},${daysMap[day]}`
                     ) ? (
-                      <td>{eventsMap[`${time},${daysMap[day]}`]}</td>
+                      <Event
+                        key={j}
+                        info={eventsMap[`${time},${daysMap[day]}`]}
+                      />
                     ) : (
-                      <td></td>
+                      <td key={j}></td>
                     );
                   })}
                 </tr>

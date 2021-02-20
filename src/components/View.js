@@ -1,3 +1,5 @@
+// View component that manages what view (Home, Calendar, or Pie Chart) to show you
+// based on what nav link user clicks
 import React from "react";
 import Home from "./Home";
 import Calendar from "./Calendar";
