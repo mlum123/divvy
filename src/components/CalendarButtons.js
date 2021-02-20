@@ -24,15 +24,19 @@ class CalendarButtons extends React.Component {
     // authButton and signOutButton use GoogleCal module to handle sign in and sign out clicks
     let authButton = (
       <Button
+        class="gcal-button"
         id="authorize-button"
         onClick={GoogleCal.handleAuthClick}
-        color="primary"
       >
         Sign in with Google
       </Button>
     );
     let signOutButton = (
-      <Button id="signout-button" onClick={GoogleCal.handleSignoutClick}>
+      <Button
+        class="gcal-button"
+        id="signout-button"
+        onClick={GoogleCal.handleSignoutClick}
+      >
         Sign Out
       </Button>
     );

@@ -1,0 +1,32 @@
+/* hook div styling */
+#hook {
+  height: 28vh;
+  padding: 2rem;
+  background: #f3d250;
+}
+
+/* big-title div styling */
+#big-title {
+  padding: 1rem;
+  height: 37vh;
+  background: #f7f7f7; /* bootstrap light color */
+}
+
+#big-title h1 {
+  font-size: 8rem;
+}
+
+/* resources div styling */
+#resources {
+  height: 28vh;
+  background: #90ccf4;
+  padding: 1rem 0px;
+}
+
+#resources p {
+  margin-bottom: 0;
+}
+
+#resources a {
+  color: black;
+}

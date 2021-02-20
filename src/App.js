@@ -63,6 +63,7 @@ class App extends React.Component {
                   <NavLink onClick={this.onNavLinkClick}>pie chart</NavLink>
                 </NavItem>
               </Nav>
+              {""}
               <CalendarButtons />
             </Collapse>
           </Navbar>
