@@ -92,8 +92,6 @@ class Calendar extends React.Component {
     let days = ["Mon", "Tues", "Wed", "Thurs", "Fri", "Sat", "Sun"];
 
     let times = [
-      "5:00 AM",
-      "6:00 AM",
       "7:00 AM",
       "8:00 AM",
       "9:00 AM",
@@ -116,11 +114,11 @@ class Calendar extends React.Component {
       "2:00 AM",
       "3:00 AM",
       "4:00 AM",
+      "5:00 AM",
+      "6:00 AM",
     ];
 
     let eventsMap = this.sortEvents();
-
-    console.log(eventsMap);
 
     return (
       <>

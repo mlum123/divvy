@@ -2,7 +2,6 @@
 import React from "react";
 import "./App.css";
 import "./GoogleCal";
-import CalendarButtons from "./components/CalendarButtons";
 import View from "./components/View";
 import {
   Collapse,
@@ -12,6 +11,7 @@ import {
   Nav,
   NavItem,
   NavLink,
+  Button,
 } from "reactstrap";
 import GoogleCal from "./GoogleCal";
 
@@ -23,6 +23,7 @@ class App extends React.Component {
       view: "home", // default View is home
       isNavbarOpen: false,
       events: [],
+      signedIn: false,
     };
 
     this.toggleNavbar = this.toggleNavbar.bind(this);
@@ -55,7 +56,33 @@ class App extends React.Component {
     });
   }
 
+  // when App component is mounted,
+  // use GoogleCal module to load the auth2 library and API client library
+  componentDidMount() {
+    GoogleCal.handleClientLoad();
+  }
+
   render() {
+    // authButton and signOutButton use GoogleCal module to handle sign in and sign out clicks
+    let authButton = (
+      <Button
+        className="gcal-button"
+        id="authorize-button"
+        onClick={GoogleCal.handleAuthClick}
+      >
+        sign in with google
+      </Button>
+    );
+    let signOutButton = (
+      <Button
+        className="gcal-button"
+        id="signout-button"
+        onClick={GoogleCal.handleSignoutClick}
+      >
+        sign out
+      </Button>
+    );
+
     return (
       <div className="App">
         <header>
@@ -74,7 +101,8 @@ class App extends React.Component {
                 </NavItem>
               </Nav>
               {""}
-              <CalendarButtons />
+              {!this.state.signedIn ? authButton : null}
+              {this.state.signedIn ? signOutButton : null}
             </Collapse>
           </Navbar>
         </header>

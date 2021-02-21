@@ -2,8 +2,8 @@
 
 /* hook div styling */
 #hook {
-  height: 27vh;
-  padding: 2rem;
+  height: 33vh;
+  padding: 3rem;
   background: #f3d250;
 }
 
@@ -29,9 +29,9 @@
 
 /* resources div styling */
 #resources {
-  height: 28vh;
+  height: 22vh;
   background: #90ccf4;
-  padding: 4rem 0px;
+  padding: 2rem 0px;
 }
 
 #resources p {
