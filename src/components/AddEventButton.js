@@ -1,9 +1,8 @@
-// Event component to display each individual event in Calendar view
+// AddEventButton component that opens up a modal allowing you to add a new Google Calendar event
 import React from "react";
+import GoogleCal from "../GoogleCal";
 import {
-  Toast,
-  ToastBody,
-  ToastHeader,
+  Button,
   Modal,
   ModalHeader,
   ModalBody,
@@ -12,25 +11,13 @@ import {
   FormGroup,
   Label,
   Input,
-  Button,
-  Row,
-  Col,
 } from "reactstrap";
-import GoogleCal from "../GoogleCal";
 
-class Event extends React.Component {
-  // info for event is passed down to Event component by Calendar component
-  // info is stored as array of 6 elements: [startTime, endTime, summary, description, id, startDateTime]
+class AddEventButton extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       modal: false,
-      eventId: this.props.info[4],
-      startTime: this.props.info[0],
-      endTime: this.props.info[1],
-      summary: this.props.info[2],
-      description: this.props.info[3],
-      origDateTime: this.props.info[5],
     };
 
     this.toggleModal = this.toggleModal.bind(this);
@@ -53,21 +40,18 @@ class Event extends React.Component {
   // use GoogleCal module to update Google Calendar event
   // using event id, start time, end time, summary, and description in state
   onSubmitForm() {
-    GoogleCal.updateEvent(
-      this.state.eventId,
+    GoogleCal.addEvent(
       this.state.startTime,
       this.state.endTime,
       this.state.summary,
       this.state.description,
-      this.state.origDateTime
+      this.state.date
     );
 
     // close modal
     this.toggleModal();
   }
 
-  // when user clicks pencil in toast of the task, a modal will pop up,
-  // allowing user to edit that Google event
   render() {
     return (
       <>
@@ -77,15 +61,23 @@ class Event extends React.Component {
             toggle={this.toggleModal}
             style={{ fontFamily: "Karla, sans-serif" }}
           >
-            <ModalHeader>{this.props.info[2]}</ModalHeader>
+            <ModalHeader>Add New Task</ModalHeader>
             <ModalBody>
               <Form>
+                <FormGroup>
+                  <Label for="date">Date</Label>
+                  <Input
+                    type="date"
+                    name="date"
+                    id="date"
+                    onChange={this.handleChange}
+                  ></Input>
+                </FormGroup>
                 <FormGroup>
                   <Label for="startTime">Start Time</Label>
                   <Input
                     type="text"
                     name="startTime"
-                    defaultValue={this.props.info[0]}
                     id="startTime"
                     onChange={this.handleChange}
                   ></Input>
@@ -95,7 +87,6 @@ class Event extends React.Component {
                   <Input
                     type="text"
                     name="endTime"
-                    defaultValue={this.props.info[1]}
                     id="endTime"
                     onChange={this.handleChange}
                   ></Input>
@@ -105,7 +96,6 @@ class Event extends React.Component {
                   <Input
                     type="text"
                     name="summary"
-                    defaultValue={this.props.info[2]}
                     id="summary"
                     onChange={this.handleChange}
                   ></Input>
@@ -115,7 +105,6 @@ class Event extends React.Component {
                   <Input
                     type="text"
                     name="description"
-                    defaultValue={this.props.info[3]}
                     id="description"
                     onChange={this.handleChange}
                   ></Input>
@@ -134,30 +123,12 @@ class Event extends React.Component {
         ) : (
           ""
         )}
-        <td>
-          <Toast style={{ background: "#90ccf4" }}>
-            <ToastHeader style={{ color: "black" }}>
-              {this.props.info[2]}
-            </ToastHeader>
-            <ToastBody>
-              {this.props.info[0]} - {this.props.info[1]}
-              <br></br>
-              <Row>
-                <Col xs="9">{this.props.info[3]} </Col>
-                <Col xs="3">
-                  <i
-                    style={{ marginLeft: "auto", cursor: "pointer" }}
-                    className="fas fa-pencil-alt"
-                    onClick={this.toggleModal}
-                  ></i>
-                </Col>
-              </Row>
-            </ToastBody>
-          </Toast>
-        </td>
+        <Button id="addTaskButton" color="primary" onClick={this.toggleModal}>
+          add new task
+        </Button>
       </>
     );
   }
 }
 
-export default Event;
+export default AddEventButton;

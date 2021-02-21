@@ -124,7 +124,6 @@ const GoogleCal = {
         // let's say week starts on monday, ends on sunday
         // use filter to get all Google Calendar events for the week
         const events = res.result.items;
-        console.log(events);
 
         if (events.length > 0) {
           return events.filter((event, i) => {
@@ -143,9 +142,8 @@ const GoogleCal = {
       });
   },
 
-  // use orig datetime string and time string to convert a date and time
-  // to 2021-02-19T07:00:00-08:00 format, for updating Google Calendar event
-  convertToGoogleTime(origDateTime, time) {
+  // convert standard time to military time
+  convertToMilitary(time) {
     let timeArr = time.split(":");
     let hour = timeArr[0];
     let hourInt = parseInt(hour);
@@ -161,16 +159,27 @@ const GoogleCal = {
       hour = "0" + hour;
     }
 
+    let newTime = hour + ":" + min;
+
+    return newTime;
+  },
+
+  // use date string and time string to convert a date and time
+  // to 2021-02-19T07:00:00-08:00 format, for updating Google Calendar event
+  convertToGoogleTime(date, time) {
     // get date from orig datetime string, concatenate with new military time hour, and new min
-    let newTime = origDateTime.substring(0, 11) + hour + ":" + min + ":00";
+    let newTime = date + GoogleCal.convertToMilitary(time) + ":00";
 
     return newTime;
   },
 
   // update existing event
   updateEvent(eventId, start, end, summary, description, origDateTime) {
-    let startTime = this.convertToGoogleTime(origDateTime, start);
-    let endTime = this.convertToGoogleTime(origDateTime, end);
+    let startTime = this.convertToGoogleTime(
+      origDateTime.substring(0, 11),
+      start
+    );
+    let endTime = this.convertToGoogleTime(origDateTime.substring(0, 11), end);
 
     gapi.client.calendar.events
       .update({
@@ -186,14 +195,17 @@ const GoogleCal = {
   },
 
   // add new event
-  addEvent() {
+  addEvent(start, end, summary, description, date) {
+    let startTime = this.convertToGoogleTime(date + "T", start);
+    let endTime = this.convertToGoogleTime(date + "T", end);
+
     gapi.client.calendar.events
       .insert({
         calendarId: "primary",
-        start: { dateTime: new Date("2021-02-21T07:00:00").toISOString() },
-        end: { dateTime: new Date("2021-02-21T08:00:00").toISOString() },
-        summary: "Take Out Trash",
-        description: "Mom",
+        start: { dateTime: new Date(startTime).toISOString() },
+        end: { dateTime: new Date(endTime).toISOString() },
+        summary: summary,
+        description: description,
       })
       .then((res) => console.log(res))
       .catch((err) => console.log(err));

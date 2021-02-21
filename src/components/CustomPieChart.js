@@ -48,21 +48,6 @@ class CustomPieChart extends React.Component {
     return Object.values(personNumTasksMap).reduce((a, b) => a + b);
   }
 
-  /* TODO - delete?
-  // calculates and creates mapping from person to percentage of work they are doing
-  percentTasks(personNumTasksMap) {
-    let totalNumTasks = this.totalTasks(personNumTasksMap);
-
-    let personPercentMap = {};
-    // for each person, update their num of tasks in the mapping
-    for (let person in personNumTasksMap) {
-      personPercentMap[person] = personNumTasksMap[person] / totalNumTasks;
-    }
-
-    return personPercentMap;
-  }
-  */
-
   // organizes each person's num of tasks into correct format to use PieChart
   // according to mapping from person to num tasks passed in
   organizeTaskData(personNumTasksMap) {

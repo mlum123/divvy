@@ -3,7 +3,7 @@ import React from "react";
 import { Table } from "reactstrap";
 import Event from "./Event";
 import "./Calendar.css";
-import GoogleCal from "../GoogleCal";
+import AddEventButton from "./AddEventButton";
 
 class Calendar extends React.Component {
   constructor(props) {
@@ -125,7 +125,8 @@ class Calendar extends React.Component {
 
     return (
       <>
-        <h1 style={{ padding: "2rem" }}>household calendar</h1>
+        <h1 style={{ paddingTop: "2rem" }}>household calendar</h1>
+        <AddEventButton />
         <Table id="calendar">
           <thead>
             <tr>
