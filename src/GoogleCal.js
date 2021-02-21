@@ -10,6 +10,8 @@ const SCOPES = "https://www.googleapis.com/auth/calendar.events";
 let gapi = window.gapi;
 
 const GoogleCal = {
+  signedIn: false,
+
   // Sign in the user upon button click.
   handleAuthClick() {
     gapi.auth2.getAuthInstance().signIn();
@@ -51,22 +53,10 @@ const GoogleCal = {
   // After a sign-in, the API is called.
   updateSigninStatus(isSignedIn) {
     if (isSignedIn) {
-      /*
-      this.setState({
-        showAuthButton: false,
-        showSignOutButton: true,
-      });
-      */
+      GoogleCal.signedIn = true;
       GoogleCal.getEvents();
-      // GoogleCal.listEvents();
-      // GoogleCal.insertNewEvent();
     } else {
-      /*
-      this.setState({
-        showAuthButton: true,
-        showSignOutButton: false,
-      });
-      */
+      GoogleCal.signedIn = false;
     }
   },
 

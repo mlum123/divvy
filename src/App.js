@@ -29,6 +29,8 @@ class App extends React.Component {
     this.toggleNavbar = this.toggleNavbar.bind(this);
     this.onNavLinkClick = this.onNavLinkClick.bind(this);
     this.getEvents = this.getEvents.bind(this);
+    this.onHandleAuthClick = this.onHandleAuthClick.bind(this);
+    this.onHandleSignoutClick = this.onHandleSignoutClick.bind(this);
   }
 
   toggleNavbar() {
@@ -52,8 +54,22 @@ class App extends React.Component {
   // get events using GoogleCal module's getEvents method
   getEvents() {
     GoogleCal.getEvents().then((events) => {
-      this.setState({ events: events });
+      this.setState({ events });
+      this.setState({ signedIn: GoogleCal.signedIn });
     });
+  }
+
+  // Google sign in button click event handler
+  onHandleAuthClick() {
+    GoogleCal.handleAuthClick();
+  }
+
+  // Google sign out button click event handler
+  onHandleSignoutClick() {
+    GoogleCal.handleSignoutClick();
+
+    // clear events in state and redirect user to home page
+    this.setState({ view: "home", events: [] });
   }
 
   // when App component is mounted,
@@ -64,11 +80,13 @@ class App extends React.Component {
 
   render() {
     // authButton and signOutButton use GoogleCal module to handle sign in and sign out clicks
+    // only display authButton (sign in) if user isn't signed in yet
+    // only display signOutButton if user is signed in with Google
     let authButton = (
       <Button
         className="gcal-button"
         id="authorize-button"
-        onClick={GoogleCal.handleAuthClick}
+        onClick={this.onHandleAuthClick}
       >
         sign in with google
       </Button>
@@ -77,7 +95,7 @@ class App extends React.Component {
       <Button
         className="gcal-button"
         id="signout-button"
-        onClick={GoogleCal.handleSignoutClick}
+        onClick={this.onHandleSignoutClick}
       >
         sign out
       </Button>

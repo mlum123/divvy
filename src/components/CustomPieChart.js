@@ -98,33 +98,51 @@ class CustomPieChart extends React.Component {
   }
 
   render() {
-    let personNumTasksMap = this.countTasks();
-    let pieChartData = this.organizeTaskData(personNumTasksMap);
+    let pieChartData;
+    let moreThanFair;
+    if (this.props.events.length > 0) {
+      let personNumTasksMap = this.countTasks();
+      pieChartData = this.organizeTaskData(personNumTasksMap);
 
-    // check if anyone is doing more than their fair share
-    // if yes, we'll display an alert and ask if they want to redistribute tasks
-    let moreThanFair = this.checkFairShare(personNumTasksMap);
+      // check if anyone is doing more than their fair share
+      // if yes, we'll display an alert and ask if they want to redistribute tasks
+      moreThanFair = this.checkFairShare(personNumTasksMap);
+    }
 
     return (
       <div>
-        <h1 style={{ padding: "2rem" }}>this week's distribution of tasks</h1>
-        {moreThanFair.length > 0 ? <UnfairAlert people={moreThanFair} /> : ""}
-        <PieChart
-          animate
-          animationDuration={500}
-          animationEasing="ease-out"
-          center={[50, 18]}
-          data={pieChartData}
-          lengthAngle={360}
-          lineWidth={55}
-          paddingAngle={0}
-          radius={16}
-          startAngle={0}
-          viewBoxSize={[100, 100]}
-          label={(data) => data.dataEntry.title + ": " + data.dataEntry.value}
-          labelPosition={73}
-          labelStyle={{ fontSize: "0.15rem" }}
-        />
+        {this.props.events.length > 0 ? (
+          <>
+            <h1 style={{ padding: "2rem" }}>
+              this week's distribution of tasks
+            </h1>
+            {moreThanFair.length > 0 ? (
+              <UnfairAlert people={moreThanFair} />
+            ) : (
+              ""
+            )}
+            <PieChart
+              animate
+              animationDuration={500}
+              animationEasing="ease-out"
+              center={[50, 18]}
+              data={pieChartData}
+              lengthAngle={360}
+              lineWidth={55}
+              paddingAngle={0}
+              radius={16}
+              startAngle={0}
+              viewBoxSize={[100, 100]}
+              label={(data) =>
+                data.dataEntry.title + ": " + data.dataEntry.value
+              }
+              labelPosition={73}
+              labelStyle={{ fontSize: "0.15rem" }}
+            />
+          </>
+        ) : (
+          <h3 style={{ padding: "2rem" }}>no tasks yet — enjoy your week!</h3>
+        )}
       </div>
     );
   }
