@@ -1,16 +1,16 @@
 // Calendar component of Google Calendar events
 import React from "react";
 import { Table } from "reactstrap";
-import "./Calendar.css";
 import Event from "./Event";
+import "./Calendar.css";
 
 class Calendar extends React.Component {
   constructor(props) {
     super(props);
 
     this.convertMilitaryToStandard = this.convertMilitaryToStandard.bind(this);
-    this.sortEvents = this.sortEvents.bind(this);
     this.convertGoogleDateTime = this.convertGoogleDateTime.bind(this);
+    this.sortEvents = this.sortEvents.bind(this);
   }
 
   // when Calendar component mounts and updates, get Google Calendar events and put in App state as events
@@ -25,8 +25,15 @@ class Calendar extends React.Component {
 
   // convert military time to standard time
   convertMilitaryToStandard(time) {
-    if (parseInt(time.substring(0, 2)) > 12) {
-      time = `${parseInt(time.substring(0, 2)) - 12}${time.substring(2)} PM`;
+    let timeInt = parseInt(time.substring(0, 2));
+    if (timeInt === 0) {
+      time = `12:00 AM`;
+    } else if (timeInt === 12) {
+      time = `12:00 PM`;
+    } else if (timeInt > 12) {
+      time = `${timeInt - 12}${time.substring(2)} PM`;
+    } else if (timeInt < 10) {
+      time = `${time.substring(1)} AM`;
     } else {
       time = `${time} AM`;
     }
@@ -113,10 +120,12 @@ class Calendar extends React.Component {
 
     let eventsMap = this.sortEvents();
 
+    console.log(eventsMap);
+
     return (
-      <div>
-        <h1>household calendar</h1>
-        <Table>
+      <>
+        <h1 style={{ padding: "2rem" }}>household calendar</h1>
+        <Table id="calendar">
           <thead>
             <tr>
               <th></th>
@@ -151,7 +160,7 @@ class Calendar extends React.Component {
             })}
           </tbody>
         </Table>
-      </div>
+      </>
     );
   }
 }

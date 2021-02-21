@@ -2,20 +2,29 @@
 
 /* hook div styling */
 #hook {
-  height: 28vh;
+  height: 25vh;
   padding: 2rem;
   background: #f3d250;
 }
 
 /* big-title div styling */
 #big-title {
-  padding: 1rem;
-  height: 37vh;
+  padding: 0.4rem 22rem;
+  height: 40vh;
   background: #f7f7f7; /* bootstrap light color */
 }
 
 #big-title h1 {
   font-size: 8rem;
+}
+
+.highlight {
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0) 80%,
+    rgba(247, 136, 136, 0.9) 20%
+  );
+  max-height: 23vh;
 }
 
 /* resources div styling */

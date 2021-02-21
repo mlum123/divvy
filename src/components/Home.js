@@ -6,14 +6,26 @@ class Home extends React.Component {
     return (
       <div>
         <div id="hook">
-          <h3>on average, working women spend 15 more hours a week </h3>
-          <h3>on unpaid domestic work than men</h3>
+          <h4>
+            <em>
+              on average, working women spend <strong>15 more hours </strong>a
+              week
+            </em>
+          </h4>
+          <h4>
+            <em>on unpaid domestic work than men</em>
+          </h4>
           <br></br>
-          <h4>covid-19 has exacerbated the situation*</h4>
+          <h4>
+            <em>covid-19 has only exacerbated the situation*</em>
+          </h4>
         </div>
 
         <div id="big-title">
-          <h1>meet divvy</h1>
+          <div className="highlight">
+            <h1>meet divvy</h1>
+          </div>
+          <br></br>
           <h2>
             <em>a better way to divvy up chores</em>
           </h2>

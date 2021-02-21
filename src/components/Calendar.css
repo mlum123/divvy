@@ -1,4 +1,8 @@
-/* Calendar view styling */
-h1 {
-  padding-top: 2rem;
+/* Calendar styling */
+
+/* make all table data uniform size */
+td {
+  text-align: left;
+  width: 15vw;
+  height: 15vh;
 }
