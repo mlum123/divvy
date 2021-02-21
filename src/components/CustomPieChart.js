@@ -1,6 +1,7 @@
 import React from "react";
 import { PieChart } from "react-minimal-pie-chart";
 import UnfairAlert from "./UnfairAlert";
+import GoodAlert from "./GoodAlert";
 
 class CustomPieChart extends React.Component {
   constructor(props) {
@@ -104,7 +105,7 @@ class CustomPieChart extends React.Component {
             {moreThanFair.length > 0 ? (
               <UnfairAlert people={moreThanFair} />
             ) : (
-              ""
+              <GoodAlert />
             )}
             <PieChart
               animate

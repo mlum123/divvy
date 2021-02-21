@@ -123,7 +123,12 @@ class AddEventButton extends React.Component {
         ) : (
           ""
         )}
-        <Button id="addTaskButton" color="primary" onClick={this.toggleModal}>
+        <Button
+          id="addTaskButton"
+          color="primary"
+          onClick={this.toggleModal}
+          style={{ marginBottom: "1rem" }}
+        >
           add new task
         </Button>
       </>

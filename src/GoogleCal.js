@@ -1,7 +1,7 @@
 // GoogleCal module for OAuth2 to view and edit user's Google Calendar events
-const API_KEY = "AIzaSyCkDI5M1avg_K4Eku7gbsY8T522-e8zRtw";
+const API_KEY = "AIzaSyCFZLWDn5ikn6x-iavj_3paf-Yls8uz8y8";
 const CLIENT_ID =
-  "100973975161-q1q4oqisj9m6evtvd0iitf29gubhknvp.apps.googleusercontent.com";
+  "1007300008344-5psduufkdoa692i4fri17jh0tc3nob6k.apps.googleusercontent.com";
 const DISCOVERY_DOCS = [
   "https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest",
 ];
