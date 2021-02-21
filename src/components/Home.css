@@ -2,7 +2,7 @@
 
 /* hook div styling */
 #hook {
-  height: 25vh;
+  height: 27vh;
   padding: 2rem;
   background: #f3d250;
 }
@@ -10,7 +10,7 @@
 /* big-title div styling */
 #big-title {
   padding: 0.4rem 22rem;
-  height: 40vh;
+  height: 38vh;
   background: #f7f7f7; /* bootstrap light color */
 }
 
@@ -31,7 +31,7 @@
 #resources {
   height: 28vh;
   background: #90ccf4;
-  padding: 1rem 0px;
+  padding: 4rem 0px;
 }
 
 #resources p {

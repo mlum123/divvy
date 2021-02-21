@@ -28,7 +28,7 @@ class CalendarButtons extends React.Component {
         id="authorize-button"
         onClick={GoogleCal.handleAuthClick}
       >
-        Sign in with Google
+        sign in with google
       </Button>
     );
     let signOutButton = (
@@ -37,7 +37,7 @@ class CalendarButtons extends React.Component {
         id="signout-button"
         onClick={GoogleCal.handleSignoutClick}
       >
-        Sign Out
+        sign out
       </Button>
     );
     return (

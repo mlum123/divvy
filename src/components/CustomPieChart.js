@@ -1,11 +1,14 @@
 import React from "react";
 import { PieChart } from "react-minimal-pie-chart";
+import UnfairAlert from "./UnfairAlert";
 
 class CustomPieChart extends React.Component {
   constructor(props) {
     super(props);
 
     this.countTasks = this.countTasks.bind(this);
+    this.totalTasks = this.totalTasks.bind(this);
+    this.checkFairShare = this.checkFairShare.bind(this);
   }
 
   // when PieChart component mounts and updates, get Google Calendar events and put in App state as events
@@ -21,7 +24,7 @@ class CustomPieChart extends React.Component {
   // creates mapping from person to number of tasks
   countTasks() {
     let personNumTasksMap = {};
-    this.props.events.map((event) => {
+    this.props.events.forEach((event) => {
       // if chore done by multiple people, people are separated by commas
       let responsible = event.description.split(", ");
 
@@ -40,6 +43,26 @@ class CustomPieChart extends React.Component {
     return personNumTasksMap;
   }
 
+  // calculates total num of tasks
+  totalTasks(personNumTasksMap) {
+    return Object.values(personNumTasksMap).reduce((a, b) => a + b);
+  }
+
+  /* TODO - delete?
+  // calculates and creates mapping from person to percentage of work they are doing
+  percentTasks(personNumTasksMap) {
+    let totalNumTasks = this.totalTasks(personNumTasksMap);
+
+    let personPercentMap = {};
+    // for each person, update their num of tasks in the mapping
+    for (let person in personNumTasksMap) {
+      personPercentMap[person] = personNumTasksMap[person] / totalNumTasks;
+    }
+
+    return personPercentMap;
+  }
+  */
+
   // organizes each person's num of tasks into correct format to use PieChart
   // according to mapping from person to num tasks passed in
   organizeTaskData(personNumTasksMap) {
@@ -57,12 +80,35 @@ class CustomPieChart extends React.Component {
     return people;
   }
 
-  /* TODO: if Mom is doing more than her share, put alert!! */
+  // checks if anyone is doing more than their fair share
+  // if yes, add them to array to return
+  checkFairShare(personNumTasksMap) {
+    let fairShare =
+      this.totalTasks(personNumTasksMap) /
+      Object.keys(personNumTasksMap).length;
+
+    let moreThanFair = [];
+    for (let person in personNumTasksMap) {
+      if (personNumTasksMap[person] > fairShare) {
+        moreThanFair.push(person);
+      }
+    }
+
+    return moreThanFair;
+  }
+
   render() {
-    let pieChartData = this.organizeTaskData(this.countTasks());
+    let personNumTasksMap = this.countTasks();
+    let pieChartData = this.organizeTaskData(personNumTasksMap);
+
+    // check if anyone is doing more than their fair share
+    // if yes, we'll display an alert and ask if they want to redistribute tasks
+    let moreThanFair = this.checkFairShare(personNumTasksMap);
+
     return (
       <div>
         <h1 style={{ padding: "2rem" }}>this week's distribution of tasks</h1>
+        {moreThanFair.length > 0 ? <UnfairAlert people={moreThanFair} /> : ""}
         <PieChart
           animate
           animationDuration={500}
@@ -75,9 +121,9 @@ class CustomPieChart extends React.Component {
           radius={16}
           startAngle={0}
           viewBoxSize={[100, 100]}
-          label={(data) => data.dataEntry.title}
+          label={(data) => data.dataEntry.title + ": " + data.dataEntry.value}
           labelPosition={73}
-          labelStyle={{ fontSize: "0.2rem" }}
+          labelStyle={{ fontSize: "0.15rem" }}
         />
       </div>
     );

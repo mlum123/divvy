@@ -6,19 +6,18 @@ class Home extends React.Component {
     return (
       <div>
         <div id="hook">
-          <h4>
+          <h2>
             <em>
-              on average, working women spend <strong>15 more hours </strong>a
-              week
+              working women spend <strong>15 more hours </strong>a week
             </em>
-          </h4>
-          <h4>
+          </h2>
+          <h2>
             <em>on unpaid domestic work than men</em>
-          </h4>
+          </h2>
           <br></br>
-          <h4>
+          <h5>
             <em>covid-19 has only exacerbated the situation*</em>
-          </h4>
+          </h5>
         </div>
 
         <div id="big-title">
@@ -43,23 +42,6 @@ class Home extends React.Component {
             >
               <em>
                 from The Atlantic — The Coronavirus Is a Disaster for Feminism
-              </em>
-            </a>
-          </div>
-
-          <br></br>
-          <div id="nyt">
-            <p>
-              "The pandemic exposed 'balance' for the lie that it is. Now, a
-              generation is teetering on the edge."
-            </p>
-            <a
-              href="https://www.nytimes.com/interactive/2021/02/04/parenting/working-moms-coronavirus.html"
-              target="_blank"
-            >
-              <em>
-                from The New York Times — The Primal Scream: America's Mothers
-                Are in Crisis
               </em>
             </a>
           </div>
