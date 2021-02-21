@@ -1,17 +1,15 @@
 # Divvy
 ### a better way to divvy up chores
 
-Historically, women have been primarily responsible for childcare responsibilities and household chores, and this inequality has only been exacerbated by the coronavirus pandemic. With children taking classes from home all the time, moms are having to dedicate even more time to their kids than ever before, while juggling their own work responsibilities. They're hanging by a thin thread, and some who can't handle it are dropping their careers to keep their households running.
+Historically, women have been primarily responsible for childcare responsibilities and household chores, and this inequality has only been exacerbated by the coronavirus pandemic. With children taking classes from home all the time, moms are having to dedicate more time to their kids than ever before, while juggling their own work responsibilities. They're hanging by a thin thread, and some are even dropping their careers to keep their households running.
 
 See this article from the New York Times: https://www.nytimes.com/2021/02/04/parenting/working-moms-mental-health-coronavirus.html
 and this one from the Atlantic: https://www.theatlantic.com/international/archive/2020/03/feminism-womens-rights-coronavirus-covid19/608302/
 and probably many, many more on the web...
 
-Divvy is a web application, made with React and the Google Calendar API, for Pearl Hacks 2021.
+Meet Divvy: a web application made with React and the Google Calendar API for Pearl Hacks 2021. Divvy uses OAuth2.0 authentication to allow users to sign in via their Google accounts, giving Divvy access to their Google Calendars. Then, Divvy can create and update a weekly household Google Calendar of tasks, which household members are responsible for them, and when they will be done. This calendar will be available when the user visits the regular Google Calendar site, or when the user signs into Divvy!
 
-Using Google OAuth2.0 authentication, Divvy allows users to sign in via their Google accounts. This gives Divvy access to the user's Google Calendar. This way, Divvy can create and update a weekly household Google Calendar of tasks, which household members are responsible for them, and when they will be done. This Google Calendar will be available when the user signs in to their Google account and accesses the regular Google Calendar site, or when the user signs into Divvy!
-
-Divvy also displays the distribution of tasks among family members for the week. If some people are doing more than their fair share, Divvy will alert users to that fact. This enables users to then redelegate tasks so that they are distributed among household members more evenly. Thus, Divvy helps ensure that no one person in the household is shouldering too much of the burden, and that everyone is pitching in to help.
+Divvy also displays the distribution of tasks among family members for the week in a visually appealing manner. If some people are doing more than their fair share, Divvy will alert users. This enables users to then re-delegate tasks so that they are distributed among household members more evenly. Thus, Divvy helps ensure that no one person in the household is shouldering too much of the burden, and that everyone is pitching in to help.
 
 Women shouldn't be set back by the coronavirus pandemic. Let’s say no to the household gender gap!
 
