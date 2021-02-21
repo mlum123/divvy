@@ -3,6 +3,7 @@ import React from "react";
 import { Table } from "reactstrap";
 import Event from "./Event";
 import "./Calendar.css";
+import GoogleCal from "../GoogleCal";
 
 class Calendar extends React.Component {
   constructor(props) {
@@ -70,6 +71,8 @@ class Calendar extends React.Component {
         endTime,
         event.summary,
         event.description,
+        event.id,
+        event.start.dateTime,
       ];
     });
 

@@ -1,11 +1,11 @@
 // GoogleCal module for OAuth2 to view and edit user's Google Calendar events
-const API_KEY = "AIzaSyAOI8-JscEE9-I5ASQl2IW5rgjzGZAzXm8";
+const API_KEY = "AIzaSyCkDI5M1avg_K4Eku7gbsY8T522-e8zRtw";
 const CLIENT_ID =
-  "741533676224-8io2t0a1pmm4dhrs68k38bkvp153nuie.apps.googleusercontent.com";
+  "100973975161-q1q4oqisj9m6evtvd0iitf29gubhknvp.apps.googleusercontent.com";
 const DISCOVERY_DOCS = [
   "https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest",
 ];
-const SCOPES = "https://www.googleapis.com/auth/calendar.events";
+const SCOPES = "https://www.googleapis.com/auth/calendar";
 
 let gapi = window.gapi;
 
@@ -124,6 +124,7 @@ const GoogleCal = {
         // let's say week starts on monday, ends on sunday
         // use filter to get all Google Calendar events for the week
         const events = res.result.items;
+        console.log(events);
 
         if (events.length > 0) {
           return events.filter((event, i) => {
@@ -140,6 +141,62 @@ const GoogleCal = {
           return [];
         }
       });
+  },
+
+  // use orig datetime string and time string to convert a date and time
+  // to 2021-02-19T07:00:00-08:00 format, for updating Google Calendar event
+  convertToGoogleTime(origDateTime, time) {
+    let timeArr = time.split(":");
+    let hour = timeArr[0];
+    let hourInt = parseInt(hour);
+
+    let min = timeArr[1].substring(0, 2);
+
+    // convert standard time to military time
+    if (time.includes("PM") && hourInt !== 12) {
+      hour = `${parseInt(hour) + 12}`;
+    } else if (time.includes("AM") && hourInt === 12) {
+      hour = "0";
+    } else if (hourInt < 10) {
+      hour = "0" + hour;
+    }
+
+    // get date from orig datetime string, concatenate with new military time hour, and new min
+    let newTime = origDateTime.substring(0, 11) + hour + ":" + min + ":00";
+
+    return newTime;
+  },
+
+  // update existing event
+  updateEvent(eventId, start, end, summary, description, origDateTime) {
+    let startTime = this.convertToGoogleTime(origDateTime, start);
+    let endTime = this.convertToGoogleTime(origDateTime, end);
+
+    gapi.client.calendar.events
+      .update({
+        calendarId: "primary",
+        eventId: eventId,
+        start: { dateTime: new Date(startTime).toISOString() },
+        end: { dateTime: new Date(endTime).toISOString() },
+        summary: summary,
+        description: description,
+      })
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
+  },
+
+  // add new event
+  addEvent() {
+    gapi.client.calendar.events
+      .insert({
+        calendarId: "primary",
+        start: { dateTime: new Date("2021-02-21T07:00:00").toISOString() },
+        end: { dateTime: new Date("2021-02-21T08:00:00").toISOString() },
+        summary: "Take Out Trash",
+        description: "Mom",
+      })
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
   },
 };
 
