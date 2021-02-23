@@ -1,5 +1,11 @@
 # Divvy
+
 ### a better way to divvy up chores
+
+#### Pearl Hacks 2021: 2nd Place Overall, Red Ventures: Best Working From Home Empowerment Hack
+
+_Check out this project on Devpost: https://devpost.com/software/divvy-diu20k_
+_Demo Video: https://youtu.be/WOhWqmazetA_
 
 Historically, women have been primarily responsible for childcare responsibilities and household chores, and this inequality has only been exacerbated by the coronavirus pandemic. With children taking classes from home all the time, moms are having to dedicate more time to their kids than ever before, while juggling their own work responsibilities. They're hanging by a thin thread, and some are even dropping their careers to keep their households running.
 
