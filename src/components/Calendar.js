@@ -28,9 +28,9 @@ class Calendar extends React.Component {
   convertMilitaryToStandard(time) {
     let timeInt = parseInt(time.substring(0, 2));
     if (timeInt === 0) {
-      time = `12:00 AM`;
+      time = `12:${time.substring(3, 5)} AM`;
     } else if (timeInt === 12) {
-      time = `12:00 PM`;
+      time = `12:${time.substring(3, 5)} PM`;
     } else if (timeInt > 12) {
       time = `${timeInt - 12}${time.substring(2)} PM`;
     } else if (timeInt < 10) {
